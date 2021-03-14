@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <!-- Default form register -->
-<form @submit.prevent="editProduct"  class="text-center border border-light p-5" action="#!">
+<form @submit.prevent="postEditProduct"  class="text-center border border-light p-5" action="#!">
 
     <p class="h4 mb-4">Edit Product</p>
 
@@ -60,7 +60,7 @@ export default {
     }
   },
   methods: {
-    async editProduct() {
+    async postEditProduct() {
     let payload = { 
       name: this.product.name, 
       short: this.product.short,
@@ -69,10 +69,11 @@ export default {
       image: this.product.image,
     };
 
-    let res = await axios.patch('http://localhost:9999/api/products/' + product._id, payload);
+    let res = await axios.patch('http://localhost:9999/api/products/' + this.product._id, payload);
 
     let data = res.data;
     console.log(data);
+    this.getProducts()
     },
     async getProducts() {
     const res = await axios.get('http://localhost:9999/api/products')
